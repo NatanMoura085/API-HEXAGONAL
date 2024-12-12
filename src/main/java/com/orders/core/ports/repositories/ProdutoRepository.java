@@ -1,14 +1,14 @@
 package com.orders.core.ports.repositories;
 
-import com.orders.core.model.ProdutoO;
+import com.orders.core.model.ProdutoModel;
 
 import java.util.List;
 
 public interface ProdutoRepository {
-    void salvar(ProdutoO produto);
+    void salvar(ProdutoModel produto);
 
-    List<ProdutoO> listaDeProdutos();
+    List<ProdutoModel> listaDeProdutos();
 
-    void update(ProdutoO produto);
+    void update(ProdutoModel produto);
 
 }

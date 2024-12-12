@@ -1,6 +1,6 @@
 package com.orders.infrastructure.adapters;
 
-import com.orders.core.model.ProdutoO;
+import com.orders.core.model.ProdutoModel;
 import com.orders.core.ports.repositories.ProdutoRepository;
 import com.orders.infrastructure.entities.ProdutoEntity;
 import com.orders.infrastructure.repository.SpringRepository;
@@ -19,9 +19,9 @@ public class ProdutoRepositoryIMP implements ProdutoRepository {
     }
 
     @Override
-    public void salvar(ProdutoO produto) {
+    public void salvar(ProdutoModel produto) {
         ProdutoEntity produtoEntity;
-        if (Objects.isNull(produto.getQTDe())) {
+        if (Objects.isNull(produto)) {
             produtoEntity = new ProdutoEntity(produto);
             this.springRepository.save(produtoEntity);
         } else {
@@ -31,14 +31,14 @@ public class ProdutoRepositoryIMP implements ProdutoRepository {
     }
 
     @Override
-    public List<ProdutoO> listaDeProdutos() {
+    public List<ProdutoModel> listaDeProdutos() {
         List<ProdutoEntity> list = this.springRepository.findAll();
         return list.stream().map(ProdutoEntity::toProduto).collect(Collectors.toList());
 
     }
 
     @Override
-    public void update(ProdutoO produto) {
+    public void update(ProdutoModel produto) {
         System.out.println(produto);
     }
 }

@@ -1,23 +1,23 @@
 package com.orders.core.dtos;
 
 import com.orders.core.enums.TypeProcess;
-import com.orders.core.model.ProdutoO;
+import com.orders.core.model.ProdutoModel;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
 public class PedidoDTO {
-    private UUID id;
+    private Integer id;
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
-    private List<ProdutoO> produtoOList;
+    private List<ProdutoModel> produtoModelList;
 
-    public PedidoDTO(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoO> produtoOList) {
+    public PedidoDTO(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoModel> produtoModelList) {
         this.id = id;
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
-        this.produtoOList = produtoOList;
+        this.produtoModelList = produtoModelList;
     }
 
     public OffsetDateTime getDateTime() {
@@ -28,8 +28,8 @@ public class PedidoDTO {
         return typeProcess;
     }
 
-    public List<ProdutoO> getProdutoList() {
-        return produtoOList;
+    public List<ProdutoModel> getProdutoList() {
+        return produtoModelList;
     }
 }
 

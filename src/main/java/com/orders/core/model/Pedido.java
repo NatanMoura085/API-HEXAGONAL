@@ -10,20 +10,28 @@ public class Pedido {
     private Integer id;
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
-    private List<ProdutoO> produtoOList;
+    private List<ProdutoModel> produtoModelList;
+    private Double total;
+
+
+    public Pedido() {
+
+    }
 
     public Pedido(OffsetDateTime dateTime, TypeProcess typeProcess) {
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
-        produtoOList = new ArrayList<>();
+        produtoModelList = new ArrayList<>();
     }
 
-    public void adicionarProduto(ProdutoO produtoO){
-        produtoOList.add(produtoO);
+    public void adicionarProduto(String nome, int QTDe, Double preco,int  QTDE) {
+        produtoModelList.add(new ProdutoModel(nome,preco,QTDe));
     }
-    public List<ProdutoO> getProdutoList(){
-        return produtoOList.stream().toList();
+
+    public List<ProdutoModel> getProdutoList() {
+        return produtoModelList.stream().toList();
     }
+
     public Integer getId() {
         return id;
     }
@@ -35,4 +43,26 @@ public class Pedido {
     public TypeProcess getTypeProcess() {
         return typeProcess;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setDateTime(OffsetDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setTypeProcess(TypeProcess typeProcess) {
+        this.typeProcess = typeProcess;
+    }
+
+    public void setProdutoModelList(List<ProdutoModel> produtoModelList) {
+        this.produtoModelList = produtoModelList;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }
+
+

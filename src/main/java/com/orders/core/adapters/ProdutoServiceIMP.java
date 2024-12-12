@@ -1,7 +1,7 @@
 package com.orders.core.adapters;
 
 import com.orders.core.dtos.ProdutoDTO;
-import com.orders.core.model.ProdutoO;
+import com.orders.core.model.ProdutoModel;
 import com.orders.core.ports.interfaces.ProdutoServicePort;
 import com.orders.core.ports.repositories.ProdutoRepository;
 
@@ -17,24 +17,24 @@ public class ProdutoServiceIMP implements ProdutoServicePort {
 
 
     @Override
-    public List<ProdutoO> getAll() {
-        List<ProdutoO> produtoOList = this.produtoRepository.listaDeProdutos();
+    public List<ProdutoModel> getAll() {
+        List<ProdutoModel> produtoModelList = this.produtoRepository.listaDeProdutos();
         //List<ProdutoO> tranformEntity = produtoOList.stream().map(ProdutoO::toprodutoDTO).collect(Collectors.toList());
-        return produtoOList;
+        return produtoModelList;
 
     }
 
     @Override
     public void criarProduto(ProdutoDTO produtoDTO) {
-        ProdutoO produtoO = new ProdutoO(produtoDTO);
-        this.produtoRepository.salvar(produtoO);
+        ProdutoModel produtoModel = new ProdutoModel(produtoDTO);
+        this.produtoRepository.salvar(produtoModel);
 
     }
 
     @Override
     public void autualizarProduto(ProdutoDTO produtoDTO) {
-        ProdutoO produtoO = new ProdutoO(produtoDTO);
-        this.produtoRepository.update(produtoO);
+        ProdutoModel produtoModel = new ProdutoModel(produtoDTO);
+        this.produtoRepository.update(produtoModel);
 
     }
 }

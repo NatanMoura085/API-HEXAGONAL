@@ -2,24 +2,34 @@ package com.orders.core.model;
 
 import com.orders.core.dtos.ProdutoDTO;
 
-public class ProdutoO {
+public class ProdutoModel {
     private Integer id;
     private String nome;
     private int QTDe;
+    private Double preco;
 
-    public ProdutoO() {
+    public ProdutoModel() {
 
     }
 
-    public ProdutoO(String nome, int QTDe) {
+    public ProdutoModel(String nome,Double preco, int QTDe) {
         this.nome = nome;
+        this.preco =preco;
         this.QTDe = QTDe;
     }
 
-    public ProdutoO(ProdutoDTO produtoDTO) {
+    public ProdutoModel(ProdutoDTO produtoDTO) {
         this.QTDe = produtoDTO.getQTDe();
         this.nome = produtoDTO.getNome();
         this.id = produtoDTO.getId();
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
     public Integer getId() {
@@ -48,6 +58,6 @@ public class ProdutoO {
 
 
     public ProdutoDTO toprodutoDTO() {
-        return new ProdutoDTO(this.getId(), this.getNome(), this.QTDe);
+        return new ProdutoDTO(this.getId(), this.getNome(),this.preco, this.QTDe);
     }
 }

@@ -1,12 +1,12 @@
 package com.orders.core.ports.interfaces;
 
 import com.orders.core.dtos.ProdutoDTO;
-import com.orders.core.model.ProdutoO;
+import com.orders.core.model.ProdutoModel;
 
 import java.util.List;
 
 public interface ProdutoServicePort {
-    List<ProdutoO> getAll();
+    List<ProdutoModel> getAll();
 
     void criarProduto(ProdutoDTO produtoDTO);
 

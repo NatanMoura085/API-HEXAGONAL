@@ -16,10 +16,9 @@ public class ProdutoEntity {
     private String nome;
     private double preco;
     private int QTDe;
+//    @ManyToOne
+//    private Pedido pedido;
 
-    public ProdutoEntity() {
-
-    }
 
     public ProdutoEntity(ProdutoModel produto) {
         this.id = produto.getId();

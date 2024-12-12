@@ -4,6 +4,7 @@ import com.orders.core.enums.TypeProcess;
 import com.orders.core.model.ProdutoModel;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,11 +14,11 @@ public class PedidoDTO {
     private TypeProcess typeProcess;
     private List<ProdutoModel> produtoModelList;
 
-    public PedidoDTO(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoModel> produtoModelList) {
+    public PedidoDTO( TypeProcess typeProcess) {
         this.id = id;
-        this.dateTime = dateTime;
+        this.dateTime = OffsetDateTime.now();
         this.typeProcess = typeProcess;
-        this.produtoModelList = produtoModelList;
+        this.produtoModelList = new ArrayList<>();
     }
 
     public OffsetDateTime getDateTime() {

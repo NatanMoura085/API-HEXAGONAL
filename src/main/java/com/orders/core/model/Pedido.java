@@ -18,8 +18,8 @@ public class Pedido {
 
     }
 
-    public Pedido(OffsetDateTime dateTime, TypeProcess typeProcess) {
-        this.dateTime = dateTime;
+    public Pedido(TypeProcess typeProcess) {
+        this.dateTime = OffsetDateTime.now();
         this.typeProcess = typeProcess;
         produtoModelList = new ArrayList<>();
     }

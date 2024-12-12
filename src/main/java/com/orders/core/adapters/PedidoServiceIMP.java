@@ -20,8 +20,9 @@ public class PedidoServiceIMP implements PedidoServicePort {
     }
 
     @Override
-    public void fazerPedido(Pedido pedido) {
-        this.pedidoRepository.salvar(pedido);
+    public Pedido fazerPedido(Pedido pedido) {
+        Pedido pedido1 = pedidoRepository.salvar(pedido);
+        return pedido1;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class PedidoServiceIMP implements PedidoServicePort {
         if (!pedidoList.contains(pedido.getId())) {
             throw new Exception("id nao existe");
         }
-            pedidoList.add(new Pedido(pedido.getDateTime(),pedido.getTypeProcess()));
+            pedidoList.add(new Pedido(pedido.getTypeProcess()));
 
         this.pedidoRepository.update(pedido);
     }

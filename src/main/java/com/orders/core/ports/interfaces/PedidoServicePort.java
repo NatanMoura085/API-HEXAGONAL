@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PedidoServicePort {
     List<Pedido> listaDePedidos();
-    void fazerPedido(Pedido pedido);
+    Pedido fazerPedido(Pedido pedido);
     void atualizar(Pedido pedido) throws Exception;
     void exluir(String id);
 

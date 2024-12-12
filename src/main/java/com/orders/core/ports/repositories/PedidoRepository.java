@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PedidoRepository {
     List<Pedido> getAll();
-    void salvar(Pedido pedido);
+    Pedido salvar(Pedido pedido);
     void update(Pedido pedido);
     void delete(String id);
 }

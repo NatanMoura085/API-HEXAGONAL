@@ -1,12 +1,13 @@
 package com.orders.core.ports.repositories;
 
+import com.orders.core.dtos.PedidoDTO;
 import com.orders.core.model.Pedido;
 
 import java.util.List;
 
 public interface PedidoRepository {
     List<Pedido> getAll();
-    Pedido salvar(Pedido pedido);
+    void salvar(Pedido pedido);
     void update(Pedido pedido);
-    void delete(String id);
+    void delete(Integer id);
 }

@@ -13,12 +13,18 @@ public class PedidoDTO {
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
     private List<ProdutoModel> produtoModelList;
+    private Double total;
 
     public PedidoDTO( TypeProcess typeProcess) {
-        this.id = id;
         this.dateTime = OffsetDateTime.now();
         this.typeProcess = typeProcess;
         this.produtoModelList = new ArrayList<>();
+    }
+
+
+
+    public Integer getId() {
+        return id;
     }
 
     public OffsetDateTime getDateTime() {
@@ -31,6 +37,10 @@ public class PedidoDTO {
 
     public List<ProdutoModel> getProdutoList() {
         return produtoModelList;
+    }
+
+    public Double getTotal() {
+        return total;
     }
 }
 

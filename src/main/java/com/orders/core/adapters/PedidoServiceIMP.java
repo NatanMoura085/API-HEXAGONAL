@@ -1,5 +1,6 @@
 package com.orders.core.adapters;
 
+import com.orders.core.dtos.PedidoDTO;
 import com.orders.core.model.Pedido;
 import com.orders.core.ports.interfaces.PedidoServicePort;
 import com.orders.core.ports.repositories.PedidoRepository;
@@ -21,9 +22,11 @@ public class PedidoServiceIMP implements PedidoServicePort {
 
     @Override
     public Pedido fazerPedido(Pedido pedido) {
-        Pedido pedido1 = pedidoRepository.salvar(pedido);
-        return pedido1;
+        this.pedidoRepository.salvar(pedido); ;
+        return pedido;
     }
+
+
 
     @Override
     public void atualizar(Pedido pedido) throws Exception {
@@ -37,7 +40,7 @@ public class PedidoServiceIMP implements PedidoServicePort {
     }
 
     @Override
-    public void exluir(String id) {
-        this.pedidoRepository.delete(id);
+    public void exluir(Integer id) {
+
     }
 }

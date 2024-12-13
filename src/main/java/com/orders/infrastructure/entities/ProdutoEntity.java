@@ -1,5 +1,6 @@
 package com.orders.infrastructure.entities;
 
+import com.orders.core.model.Pedido;
 import com.orders.core.model.ProdutoModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,9 @@ public class ProdutoEntity {
     private String nome;
     private double preco;
     private int QTDe;
-//    @ManyToOne
-//    private Pedido pedido;
+    @ManyToOne
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private PedidoEntity pedido;
 
 
     public ProdutoEntity(ProdutoModel produto) {

@@ -8,6 +8,6 @@ public interface PedidoServicePort {
     List<Pedido> listaDePedidos();
     Pedido fazerPedido(Pedido pedido);
     void atualizar(Pedido pedido) throws Exception;
-    void exluir(String id);
+    void exluir(Integer id);
 
 }

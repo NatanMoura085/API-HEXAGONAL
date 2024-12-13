@@ -1,5 +1,6 @@
 package com.orders.core.model;
 
+import com.orders.core.dtos.PedidoDTO;
 import com.orders.core.enums.TypeProcess;
 
 import java.time.OffsetDateTime;
@@ -24,7 +25,23 @@ public class Pedido {
         produtoModelList = new ArrayList<>();
     }
 
-    public void adicionarProduto(String nome, int QTDe, Double preco,int  QTDE) {
+    public Pedido(PedidoDTO pedidoDTO){
+        this.id = pedidoDTO.getId();
+        this.dateTime = pedidoDTO.getDateTime();
+        this.typeProcess = pedidoDTO.getTypeProcess();
+        this.produtoModelList = pedidoDTO.getProdutoList();
+        this.total = pedidoDTO.getTotal();
+    }
+
+    public Pedido(Integer id, OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoModel> produtoModelList, Double total) {
+        this.id = id;
+        this.dateTime = dateTime;
+        this.typeProcess = typeProcess;
+        this.produtoModelList = produtoModelList;
+        this.total = total;
+    }
+
+    public void adicionarProduto(String nome, int QTDe, Double preco, int  QTDE) {
         produtoModelList.add(new ProdutoModel(nome,preco,QTDe));
     }
 

@@ -1,6 +1,7 @@
 package com.orders.core.model;
 
 import com.orders.core.dtos.ProdutoDTO;
+import com.orders.infrastructure.entities.ProdutoEntity;
 
 public class ProdutoModel {
     private Integer id;
@@ -60,4 +61,5 @@ public class ProdutoModel {
     public ProdutoDTO toprodutoDTO() {
         return new ProdutoDTO(this.getId(), this.getNome(),this.preco, this.QTDe);
     }
+
 }

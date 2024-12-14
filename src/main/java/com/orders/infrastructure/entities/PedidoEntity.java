@@ -1,5 +1,6 @@
 package com.orders.infrastructure.entities;
 
+import com.orders.core.dtos.ProdutoDTO;
 import com.orders.core.enums.TypeProcess;
 import com.orders.core.model.Pedido;
 import jakarta.persistence.*;
@@ -39,4 +40,6 @@ public class PedidoEntity {
     public Pedido toPedido() {
         return new Pedido(this.id,this.dateTime,this.typeProcess,this.produtoEntities.stream().map(ProdutoEntity::toProduto).toList(),this.total);
     }
+
+
 }

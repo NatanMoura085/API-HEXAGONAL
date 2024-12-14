@@ -2,6 +2,8 @@ package com.orders.core.model;
 
 import com.orders.core.dtos.PedidoDTO;
 import com.orders.core.enums.TypeProcess;
+import com.orders.infrastructure.entities.PedidoEntity;
+import com.orders.infrastructure.entities.ProdutoEntity;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -53,6 +55,10 @@ public class Pedido {
         return id;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
     public OffsetDateTime getDateTime() {
         return dateTime;
     }
@@ -80,6 +86,8 @@ public class Pedido {
     public void setTotal(Double total) {
         this.total = total;
     }
+
+
 }
 
 

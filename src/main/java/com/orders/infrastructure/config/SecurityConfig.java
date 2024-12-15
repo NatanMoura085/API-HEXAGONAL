@@ -21,8 +21,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityWebFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorization -> authorization.requestMatchers(HttpMethod.POST, "/api/v1/prod/**").permitAll()
-
+                .authorizeHttpRequests(authorization ->
+                        authorization.requestMatchers(HttpMethod.GET, "/api/v1/prod/**").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/api/v1/prod/**").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/api/v1/orders/**").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/api/v1/orders/**").permitAll()
                         .anyRequest().authenticated())
                 .build();
     }

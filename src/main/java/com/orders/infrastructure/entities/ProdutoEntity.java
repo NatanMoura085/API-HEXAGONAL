@@ -21,6 +21,9 @@ public class ProdutoEntity {
     @JoinColumn(name = "pedido_id", nullable = false)
     private PedidoEntity pedido;
 
+    public ProdutoEntity(){
+
+    }
 
     public ProdutoEntity(ProdutoModel produto) {
         this.id = produto.getId();

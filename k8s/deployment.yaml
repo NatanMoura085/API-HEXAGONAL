@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: app-kubernetes
+spec:
+  replicas: 3 # Número de pods
+  selector:
+    matchLabels:
+      app: app-kubernetes
+  template:
+    metadata:
+      labels:
+        app: app-kubernetes
+    spec:
+      containers:
+        - name: app-container
+          image: meu-usuario/app-image:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets

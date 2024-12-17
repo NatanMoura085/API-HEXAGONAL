@@ -7,7 +7,7 @@ public class ProdutoModel {
     private Integer id;
     private String nome;
     private int QTDe;
-    private Double preco;
+    private double preco;
 
     public ProdutoModel() {
 
@@ -20,16 +20,17 @@ public class ProdutoModel {
     }
 
     public ProdutoModel(ProdutoDTO produtoDTO) {
+        this.id = produtoDTO.getId();
         this.QTDe = produtoDTO.getQTDe();
         this.nome = produtoDTO.getNome();
-        this.id = produtoDTO.getId();
+        this.preco = produtoDTO.getPreco();
     }
 
-    public Double getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 

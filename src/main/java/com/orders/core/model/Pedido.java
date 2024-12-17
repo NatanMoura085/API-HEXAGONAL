@@ -8,6 +8,7 @@ import com.orders.infrastructure.entities.ProdutoEntity;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Pedido {
     private Integer id;
@@ -39,7 +40,7 @@ public class Pedido {
         this.id = id;
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
-        this.produtoModelList = produtoModelList;
+        this.produtoModelList =  new ArrayList<>(produtoModelList);
         this.total = total;
     }
 
@@ -48,6 +49,10 @@ public class Pedido {
     }
 
     public List<ProdutoModel> getProdutoList() {
+         if (Objects.isNull(produtoModelList)){
+             throw new RuntimeException("Esta sem pedidos");
+
+         }
         return produtoModelList.stream().toList();
     }
 

@@ -3,10 +3,10 @@ package com.orders.core.dtos;
 public class ProdutoDTO {
     private Integer id;
     private String nome;
-    private Double preco;
+    private double preco;
     private int QTDe;
 
-    public ProdutoDTO(Integer id, String nome, Double preco, int QTDe) {
+    public ProdutoDTO(Integer id, String nome, double preco, int QTDe) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
@@ -17,11 +17,11 @@ public class ProdutoDTO {
 
     }
 
-    public Double getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 

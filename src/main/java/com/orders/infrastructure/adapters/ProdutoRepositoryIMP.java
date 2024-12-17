@@ -14,21 +14,25 @@ import java.util.stream.Collectors;
 public class ProdutoRepositoryIMP implements ProdutoRepository {
     private SpringRepository springRepository;
 
+
     public ProdutoRepositoryIMP(SpringRepository springRepository) {
         this.springRepository = springRepository;
     }
 
     @Override
     public void salvar(ProdutoModel produto) {
-        ProdutoEntity produtoEntity;
-        if (Objects.isNull(produto)) {
-            produtoEntity = new ProdutoEntity(produto);
-            this.springRepository.save(produtoEntity);
-        } else {
-            throw new RuntimeException("deu erro");
+        try {
+            if (Objects.nonNull(produto)) {
+                ProdutoEntity produtoEntity = new ProdutoEntity(produto);
+                this.springRepository.save(produtoEntity);
+            } else {
+                throw new IllegalArgumentException("Produto não pode ser nulo");
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao salvar produto", e);
         }
-
     }
+
 
     @Override
     public List<ProdutoModel> listaDeProdutos() {

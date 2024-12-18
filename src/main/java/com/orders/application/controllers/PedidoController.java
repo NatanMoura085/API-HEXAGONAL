@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/orders")
+@RequestMapping("/api/v1")
 public class PedidoController {
     private PedidoServicePort pedidoServicePort;
     private PedidoPublish pedidoPublish;
@@ -20,12 +20,12 @@ public class PedidoController {
 
     }
 
-    @GetMapping
+    @GetMapping("/orders")
     public List<Pedido> getAll() {
         return pedidoServicePort.listaDePedidos();
     }
 
-    @PostMapping
+    @PostMapping("/order")
     @ResponseStatus(HttpStatus.CREATED)
     public Pedido criarPedido(@RequestBody Pedido pedido) {
         this.pedidoPublish.enviarPedido(pedido);

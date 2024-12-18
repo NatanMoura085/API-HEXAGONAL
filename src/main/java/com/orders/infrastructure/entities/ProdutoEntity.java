@@ -1,7 +1,6 @@
 package com.orders.infrastructure.entities;
 
 import com.orders.core.dtos.ProdutoDTO;
-import com.orders.core.model.Pedido;
 import com.orders.core.model.ProdutoModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,21 +26,20 @@ public class ProdutoEntity {
     }
 
     public ProdutoEntity(ProdutoModel produto) {
-        this.id = produto.getId();
         this.nome = produto.getNome();
         this.preco = produto.getPreco();
         this.QTDe = produto.getQTDe();
     }
 
     public ProdutoEntity(ProdutoDTO produtoDTO){
-        this.id = produtoDTO.getId();
         this.nome = produtoDTO.getNome();
         this.preco = produtoDTO.getPreco();
         this.QTDe = produtoDTO.getQTDe();
+
     }
 
     public ProdutoModel toProduto() {
-        return new ProdutoModel(this.nome,this.preco, this.QTDe);
+        return new ProdutoModel(this.nome, this.QTDe, this.preco, new ProdutoDTO().getPedido());
     }
 
 }

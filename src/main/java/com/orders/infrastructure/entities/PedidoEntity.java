@@ -19,7 +19,7 @@ import java.util.List;
 public class PedidoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "pedido_id")
     private Long pedidoId;
     private OffsetDateTime dateTime;
@@ -31,14 +31,13 @@ public class PedidoEntity {
 
 
     public PedidoEntity(Pedido pedido){
-        this.id = pedido.getId();
         this.dateTime = pedido.getDateTime();
         this.typeProcess = pedido.getTypeProcess();
         this.produtoEntities = pedido.getProdutoList().stream().map(ProdutoEntity::new).toList();
     }
 
     public Pedido toPedido() {
-        return new Pedido(this.id,this.dateTime,this.typeProcess,this.produtoEntities.stream().map(ProdutoEntity::toProduto).toList(),this.total);
+        return new Pedido(this.dateTime,this.typeProcess,this.produtoEntities.stream().map(ProdutoEntity::toProduto).toList(),this.total);
     }
 
 

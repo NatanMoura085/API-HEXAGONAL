@@ -9,13 +9,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class PedidoDTO {
-    private Integer id;
+    private String id;
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
     private List<ProdutoModel> produtoModelList;
     private Double total;
 
     public PedidoDTO( TypeProcess typeProcess) {
+        this.id = UUID.randomUUID().toString();
         this.dateTime = OffsetDateTime.now();
         this.typeProcess = typeProcess;
         this.produtoModelList = new ArrayList<>();
@@ -23,7 +24,7 @@ public class PedidoDTO {
 
 
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

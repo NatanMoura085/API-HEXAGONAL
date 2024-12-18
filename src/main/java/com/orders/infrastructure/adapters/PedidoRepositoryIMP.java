@@ -45,7 +45,7 @@ public class PedidoRepositoryIMP implements PedidoRepository {
 
         if (Objects.isNull(pedido.getId())) {
             pedidoEntity = new PedidoEntity(pedido);
-            pedidoEntity.setId(pedido.getId());
+            pedidoEntity.setId(Long.parseLong(pedido.getId()));
             pedidoEntity.setPedidoId(pedidoEntity.getPedidoId());
             pedidoEntity.setTypeProcess(pedido.getTypeProcess());
             pedidoEntity.setDateTime(pedido.getDateTime());

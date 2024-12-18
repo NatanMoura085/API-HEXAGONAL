@@ -9,9 +9,10 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Pedido {
-    private Integer id;
+    private String id;
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
     private List<ProdutoModel> produtoModelList;
@@ -23,6 +24,7 @@ public class Pedido {
     }
 
     public Pedido(TypeProcess typeProcess) {
+        this.id = UUID.randomUUID().toString();
         this.dateTime = OffsetDateTime.now();
         this.typeProcess = typeProcess;
         produtoModelList = new ArrayList<>();
@@ -36,16 +38,16 @@ public class Pedido {
         this.total = pedidoDTO.getTotal();
     }
 
-    public Pedido(Integer id, OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoModel> produtoModelList, Double total) {
-        this.id = id;
+    public Pedido(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoModel> produtoModelList, Double total) {
+        this.id = UUID.randomUUID().toString();
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
         this.produtoModelList =  new ArrayList<>(produtoModelList);
         this.total = total;
     }
 
-    public void adicionarProduto(String nome, int QTDe, Double preco, int  QTDE) {
-        produtoModelList.add(new ProdutoModel(nome,preco,QTDe));
+    public void adicionarProduto(String nome, int QTDe, double preco, Pedido pedido) {
+        produtoModelList.add(new ProdutoModel(nome,QTDe, preco,pedido));
     }
 
     public List<ProdutoModel> getProdutoList() {
@@ -56,7 +58,7 @@ public class Pedido {
         return produtoModelList.stream().toList();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -72,7 +74,7 @@ public class Pedido {
         return typeProcess;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

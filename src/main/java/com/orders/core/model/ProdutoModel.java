@@ -3,20 +3,26 @@ package com.orders.core.model;
 import com.orders.core.dtos.ProdutoDTO;
 import com.orders.infrastructure.entities.ProdutoEntity;
 
+import java.util.UUID;
+
 public class ProdutoModel {
-    private Integer id;
+    private String id;
     private String nome;
     private int QTDe;
     private double preco;
+    private Pedido pedido;
 
     public ProdutoModel() {
 
     }
 
-    public ProdutoModel(String nome,Double preco, int QTDe) {
+
+    public ProdutoModel(String nome, int QTDe, double preco, Pedido pedido) {
+        this.id = UUID.randomUUID().toString();
         this.nome = nome;
-        this.preco =preco;
         this.QTDe = QTDe;
+        this.preco = preco;
+        this.pedido = pedido;
     }
 
     public ProdutoModel(ProdutoDTO produtoDTO) {
@@ -34,7 +40,7 @@ public class ProdutoModel {
         this.preco = preco;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -46,7 +52,7 @@ public class ProdutoModel {
         return QTDe;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -60,7 +66,11 @@ public class ProdutoModel {
 
 
     public ProdutoDTO toprodutoDTO() {
-        return new ProdutoDTO(this.getId(), this.getNome(),this.preco, this.QTDe);
+        return new ProdutoDTO(
+                this.getNome(),
+                this.preco,
+                this.QTDe,
+                this.toprodutoDTO().getPedido());
     }
 
 }

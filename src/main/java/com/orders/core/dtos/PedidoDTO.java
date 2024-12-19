@@ -15,11 +15,11 @@ public class PedidoDTO {
     private List<ProdutoModel> produtoModelList;
     private Double total;
 
-    public PedidoDTO( TypeProcess typeProcess) {
+    public PedidoDTO(TypeProcess typeProcess) {
         this.id = UUID.randomUUID().toString();
         this.dateTime = OffsetDateTime.now();
         this.typeProcess = typeProcess;
-        this.produtoModelList = new ArrayList<>();
+        this.produtoModelList = new ArrayList<ProdutoModel>();
     }
 
 

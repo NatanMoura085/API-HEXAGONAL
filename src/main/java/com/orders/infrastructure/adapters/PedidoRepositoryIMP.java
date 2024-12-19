@@ -29,7 +29,7 @@ public class PedidoRepositoryIMP implements PedidoRepository {
     public void salvar(Pedido pedido) {
         PedidoEntity pedidoEntity;
 
-        if (Objects.isNull(pedido.getId())) {
+        if (Objects.nonNull(pedido)) {
             pedidoEntity = new PedidoEntity(pedido);
         } else {
 
@@ -43,7 +43,7 @@ public class PedidoRepositoryIMP implements PedidoRepository {
     public void update(Pedido pedido) {
         PedidoEntity pedidoEntity;
 
-        if (Objects.isNull(pedido.getId())) {
+        if (Objects.nonNull(pedido.getId())) {
             pedidoEntity = new PedidoEntity(pedido);
             pedidoEntity.setId(Long.parseLong(pedido.getId()));
             pedidoEntity.setPedidoId(pedidoEntity.getPedidoId());

@@ -18,7 +18,7 @@ public class ProdutoEntity {
     private double preco;
     private int QTDe;
     @ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = false)
+    @JoinColumn(name = "pedido_id")
     private PedidoEntity pedido;
 
     public ProdutoEntity(){

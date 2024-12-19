@@ -25,10 +25,10 @@ public class PedidoController {
         return pedidoServicePort.listaDePedidos();
     }
 
-    @PostMapping("/order")
     @ResponseStatus(HttpStatus.CREATED)
-    public Pedido criarPedido(@RequestBody Pedido pedido) {
-        this.pedidoPublish.enviarPedido(pedido);
-        return pedidoServicePort.fazerPedido(pedido);
+    @PostMapping("/order")
+    public void criarPedido(@RequestBody Pedido pedido) {
+         pedidoServicePort.fazerPedido(pedido);
+        //this.pedidoPublish.enviarPedido(pedido);
     }
 }

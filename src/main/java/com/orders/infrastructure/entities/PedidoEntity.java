@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Table(name = "tb_pedidos")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class PedidoEntity {
     @Id
@@ -33,11 +35,12 @@ public class PedidoEntity {
     public PedidoEntity(Pedido pedido){
         this.dateTime = pedido.getDateTime();
         this.typeProcess = pedido.getTypeProcess();
+        this.total = pedido.somaTotal();
         this.produtoEntities = pedido.getProdutoList().stream().map(ProdutoEntity::new).toList();
     }
 
     public Pedido toPedido() {
-        return new Pedido(this.dateTime,this.typeProcess,this.produtoEntities.stream().map(ProdutoEntity::toProduto).toList(),this.total);
+        return new Pedido(this.dateTime,this.typeProcess,this.produtoEntities.stream().map(ProdutoEntity::toProduto).toList());
     }
 
 

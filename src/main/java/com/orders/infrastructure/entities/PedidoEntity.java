@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,15 +23,19 @@ public class PedidoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "pedido_id")
-    private Long pedidoId;
     private OffsetDateTime dateTime;
     @Enumerated(EnumType.STRING)
     private TypeProcess typeProcess;
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProdutoEntity> produtoEntities;
+    private List<ProdutoEntity> produtoEntities = new ArrayList<>();
     private Double total;
 
+
+    public PedidoEntity(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoEntity> produtoEntities) {
+        this.dateTime = dateTime;
+        this.typeProcess = typeProcess;
+        this.produtoEntities = produtoEntities;
+    }
 
     public PedidoEntity(Pedido pedido){
         this.dateTime = pedido.getDateTime();

@@ -31,6 +31,7 @@ public class PedidoRepositoryIMP implements PedidoRepository {
 
         if (Objects.nonNull(pedido)) {
             pedidoEntity = new PedidoEntity(pedido);
+
         } else {
 
             throw new RuntimeException("deu erro");
@@ -46,7 +47,6 @@ public class PedidoRepositoryIMP implements PedidoRepository {
         if (Objects.nonNull(pedido.getId())) {
             pedidoEntity = new PedidoEntity(pedido);
             pedidoEntity.setId(Long.parseLong(pedido.getId()));
-            pedidoEntity.setPedidoId(pedidoEntity.getPedidoId());
             pedidoEntity.setTypeProcess(pedido.getTypeProcess());
             pedidoEntity.setDateTime(pedido.getDateTime());
             pedidoEntity.setTotal(pedido.getTotal());

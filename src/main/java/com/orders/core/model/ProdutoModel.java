@@ -64,6 +64,9 @@ public class ProdutoModel {
         this.QTDe = QTDe;
     }
 
+    public Pedido getPedido() {
+        return pedido;
+    }
 
     public ProdutoDTO toprodutoDTO() {
         return new ProdutoDTO(

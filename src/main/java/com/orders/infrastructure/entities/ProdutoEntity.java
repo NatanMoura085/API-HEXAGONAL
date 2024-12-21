@@ -18,7 +18,7 @@ public class ProdutoEntity {
     private double preco;
     private int QTDe;
     @ManyToOne
-    @JoinColumn(name = "pedido_id")
+    @JoinColumn(name = "pedido_id", referencedColumnName = "id")
     private PedidoEntity pedido;
 
     public ProdutoEntity(){
@@ -35,8 +35,8 @@ public class ProdutoEntity {
         this.nome = produtoDTO.getNome();
         this.preco = produtoDTO.getPreco();
         this.QTDe = produtoDTO.getQTDe();
-
     }
+
 
     public ProdutoModel toProduto() {
         return new ProdutoModel(this.nome, this.QTDe, this.preco, new ProdutoDTO().getPedido());

@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public class PedidoDTO {
     private String id;
+    private Long pedidoId;
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
     private List<ProdutoModel> produtoModelList;
@@ -23,6 +24,13 @@ public class PedidoDTO {
     }
 
 
+    public Long getPedidoId() {
+        return pedidoId;
+    }
+
+    public List<ProdutoModel> getProdutoModelList() {
+        return produtoModelList;
+    }
 
     public String getId() {
         return id;

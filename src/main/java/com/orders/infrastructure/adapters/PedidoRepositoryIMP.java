@@ -3,6 +3,7 @@ package com.orders.infrastructure.adapters;
 import com.orders.core.model.Pedido;
 import com.orders.core.model.ProdutoModel;
 import com.orders.core.ports.repositories.PedidoRepository;
+import com.orders.core.ports.repositories.ProdutoRepository;
 import com.orders.infrastructure.entities.PedidoEntity;
 import com.orders.infrastructure.entities.ProdutoEntity;
 import com.orders.infrastructure.repository.SpringPedidoRepository;
@@ -10,13 +11,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Component
 public class PedidoRepositoryIMP implements PedidoRepository {
     private SpringPedidoRepository springPedidoRepository;
 
-    public PedidoRepositoryIMP(SpringPedidoRepository springPedidoRepository) {
+    private ProdutoRepository produtoRepository;
+
+    public PedidoRepositoryIMP(SpringPedidoRepository springPedidoRepository, ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
         this.springPedidoRepository = springPedidoRepository;
     }
 
@@ -30,15 +33,21 @@ public class PedidoRepositoryIMP implements PedidoRepository {
         PedidoEntity pedidoEntity;
 
         if (Objects.nonNull(pedido)) {
+            for (ProdutoModel produtoModel : pedido.getProdutoList()) {
+                ProdutoEntity produtoEntity = new ProdutoEntity();
+                pedido.adicionarProduto(produtoModel.getNome(), produtoModel.getQTDe(), produtoModel.getPreco(), produtoModel.getPedido());
+            }
             pedidoEntity = new PedidoEntity(pedido);
-
         } else {
+
 
             throw new RuntimeException("deu erro");
 
         }
         this.springPedidoRepository.save(pedidoEntity);
+
     }
+
 
     @Override
     public void update(Pedido pedido) {

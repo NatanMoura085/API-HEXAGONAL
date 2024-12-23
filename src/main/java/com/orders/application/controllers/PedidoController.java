@@ -4,6 +4,7 @@ import com.orders.core.model.Pedido;
 import com.orders.core.ports.interfaces.PedidoPublish;
 import com.orders.core.ports.interfaces.PedidoServicePort;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

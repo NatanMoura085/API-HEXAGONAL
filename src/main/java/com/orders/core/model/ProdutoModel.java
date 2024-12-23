@@ -1,7 +1,6 @@
 package com.orders.core.model;
 
 import com.orders.core.dtos.ProdutoDTO;
-import com.orders.infrastructure.entities.ProdutoEntity;
 
 import java.util.UUID;
 
@@ -17,12 +16,11 @@ public class ProdutoModel {
     }
 
 
-    public ProdutoModel(String nome, int QTDe, double preco, Pedido pedido) {
+    public ProdutoModel(String nome, int QTDe, double preco) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
         this.QTDe = QTDe;
         this.preco = preco;
-        this.pedido = pedido;
     }
 
     public ProdutoModel(ProdutoDTO produtoDTO) {
@@ -64,16 +62,13 @@ public class ProdutoModel {
         this.QTDe = QTDe;
     }
 
-    public Pedido getPedido() {
-        return pedido;
-    }
 
     public ProdutoDTO toprodutoDTO() {
         return new ProdutoDTO(
-                this.getNome(),
+                this.nome,
                 this.preco,
                 this.QTDe,
-                this.toprodutoDTO().getPedido());
+                this.pedido);
     }
 
 }

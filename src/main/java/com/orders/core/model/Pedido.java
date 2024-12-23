@@ -12,7 +12,6 @@ import java.util.UUID;
 
 public class Pedido {
     private String id;
-    private Long pedidoId;
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
     private List<ProdutoModel> produtoModelList;
@@ -46,8 +45,8 @@ public class Pedido {
         this.total = somaTotal();
     }
 
-    public void adicionarProduto(String nome, int QTDe, double preco, Pedido pedido) {
-        produtoModelList.add(new ProdutoModel(nome,QTDe, preco,pedido));
+    public void adicionarProduto(String nome, int QTDe, double preco) {
+        produtoModelList.add(new ProdutoModel(nome,QTDe, preco));
     }
 
     public double somaTotal(){
@@ -60,9 +59,9 @@ public class Pedido {
         return produtoModelList == null ? new ArrayList<>() : produtoModelList.stream().toList();
     }
 
-    public Long getPedidoId() {
-        return pedidoId;
-    }
+//    public Long getPedidoId() {
+//        return pedidoId;
+//    }
 
     public String getId() {
         return id;

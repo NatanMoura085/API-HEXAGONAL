@@ -7,6 +7,7 @@ import com.orders.core.ports.repositories.ProdutoRepository;
 import com.orders.infrastructure.entities.PedidoEntity;
 import com.orders.infrastructure.entities.ProdutoEntity;
 import com.orders.infrastructure.repository.SpringPedidoRepository;
+import com.orders.infrastructure.repository.SpringRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,12 +16,13 @@ import java.util.Objects;
 @Component
 public class PedidoRepositoryIMP implements PedidoRepository {
     private SpringPedidoRepository springPedidoRepository;
+    private SpringRepository springRepository;
 
-    private ProdutoRepository produtoRepository;
 
-    public PedidoRepositoryIMP(SpringPedidoRepository springPedidoRepository, ProdutoRepository produtoRepository) {
-        this.produtoRepository = produtoRepository;
+    public PedidoRepositoryIMP(SpringPedidoRepository springPedidoRepository,SpringRepository springRepository) {
+
         this.springPedidoRepository = springPedidoRepository;
+        this.springRepository = springRepository;
     }
 
     @Override
@@ -30,21 +32,19 @@ public class PedidoRepositoryIMP implements PedidoRepository {
 
     @Override
     public void salvar(Pedido pedido) {
-        PedidoEntity pedidoEntity;
-
-        if (Objects.nonNull(pedido)) {
-            for (ProdutoModel produtoModel : pedido.getProdutoList()) {
-                ProdutoEntity produtoEntity = new ProdutoEntity();
-                pedido.adicionarProduto(produtoModel.getNome(), produtoModel.getQTDe(), produtoModel.getPreco(), produtoModel.getPedido());
-            }
-            pedidoEntity = new PedidoEntity(pedido);
-        } else {
-
-
-            throw new RuntimeException("deu erro");
-
+        if (Objects.isNull(pedido)) {
+            throw new IllegalArgumentException("Pedido não pode ser nulo.");
         }
-        this.springPedidoRepository.save(pedidoEntity);
+        PedidoEntity pedidoEntity = new PedidoEntity(pedido);
+
+        pedidoEntity = this.springPedidoRepository.save(pedidoEntity);
+
+        for (ProdutoModel produtoModel : pedido.getProdutoList()) {
+            ProdutoEntity produtoEntity = new ProdutoEntity(produtoModel);
+            produtoEntity.setPedido(pedidoEntity);
+
+            this.springRepository.save(produtoEntity);
+        }
 
     }
 

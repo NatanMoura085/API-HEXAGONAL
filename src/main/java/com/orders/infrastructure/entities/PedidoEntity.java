@@ -1,5 +1,7 @@
 package com.orders.infrastructure.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.orders.core.dtos.ProdutoDTO;
 import com.orders.core.enums.TypeProcess;
 import com.orders.core.model.Pedido;
@@ -26,6 +28,7 @@ public class PedidoEntity {
     private OffsetDateTime dateTime;
     @Enumerated(EnumType.STRING)
     private TypeProcess typeProcess;
+    @JsonManagedReference
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProdutoEntity> produtoEntities = new ArrayList<>();
     private Double total;

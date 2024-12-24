@@ -1,5 +1,6 @@
 package com.orders.infrastructure.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.orders.core.dtos.ProdutoDTO;
 import com.orders.core.model.Pedido;
 import com.orders.core.model.ProdutoModel;
@@ -20,11 +21,12 @@ public class ProdutoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
-    private String nome = "padrao";
+    private String nome ;
     private double preco;
     private int QTDe;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "pedido_id", referencedColumnName = "id")
+    @JsonBackReference
     private PedidoEntity pedido;
 
     public ProdutoEntity(){
@@ -44,6 +46,12 @@ public class ProdutoEntity {
     }
 
     public ProdutoEntity(Pedido pedido) {
+       mapProdAdd(pedido);
+    }
+
+
+
+    public void mapProdAdd(Pedido pedido){
         this.pedido = new PedidoEntity(pedido);
         for (ProdutoModel p : pedido.getProdutoList()) {
             ProdutoEntity produtoEntity = new ProdutoEntity();
@@ -55,8 +63,6 @@ public class ProdutoEntity {
             logger.info("aqui>>>>>>>"+ produtoEntity.getNome());
         }
     }
-
-
     public ProdutoModel toProduto() {
         return new ProdutoModel(this.nome, this.QTDe, this.preco);
     }

@@ -3,7 +3,6 @@ package com.orders.infrastructure.adapters;
 import com.orders.core.model.Pedido;
 import com.orders.core.model.ProdutoModel;
 import com.orders.core.ports.repositories.PedidoRepository;
-import com.orders.core.ports.repositories.ProdutoRepository;
 import com.orders.infrastructure.entities.PedidoEntity;
 import com.orders.infrastructure.entities.ProdutoEntity;
 import com.orders.infrastructure.repository.SpringPedidoRepository;
@@ -38,7 +37,6 @@ public class PedidoRepositoryIMP implements PedidoRepository {
         PedidoEntity pedidoEntity = new PedidoEntity(pedido);
 
         pedidoEntity = this.springPedidoRepository.save(pedidoEntity);
-
         for (ProdutoModel produtoModel : pedido.getProdutoList()) {
             ProdutoEntity produtoEntity = new ProdutoEntity(produtoModel);
             produtoEntity.setPedido(pedidoEntity);

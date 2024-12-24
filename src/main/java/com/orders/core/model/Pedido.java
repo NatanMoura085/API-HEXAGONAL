@@ -2,19 +2,17 @@ package com.orders.core.model;
 
 import com.orders.core.dtos.PedidoDTO;
 import com.orders.core.enums.TypeProcess;
-import com.orders.infrastructure.entities.ProdutoEntity;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class Pedido {
     private String id;
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
-    private List<ProdutoModel> produtoModelList;
+    private List<ProdutoModel> produtoModelList  =new ArrayList<>();;
     private Double total;
 
 
@@ -33,7 +31,7 @@ public class Pedido {
         this.id = pedidoDTO.getId();
         this.dateTime = pedidoDTO.getDateTime();
         this.typeProcess = pedidoDTO.getTypeProcess();
-        this.produtoModelList = pedidoDTO.getProdutoList();
+        this.produtoModelList = (pedidoDTO.getProdutoList() == null) ? new ArrayList<>() : pedidoDTO.getProdutoList();
         this.total = somaTotal();
     }
 
@@ -50,18 +48,11 @@ public class Pedido {
     }
 
     public double somaTotal(){
-         if (Objects.isNull(produtoModelList)){
-             produtoModelList = new ArrayList<>();
-         }
         return produtoModelList.stream().mapToDouble(produto-> produto.getPreco() * produto.getQTDe()).sum();
     }
     public List<ProdutoModel> getProdutoList() {
-        return produtoModelList == null ? new ArrayList<>() : produtoModelList.stream().toList();
+        return produtoModelList == null ? new ArrayList<>() : produtoModelList;
     }
-
-//    public Long getPedidoId() {
-//        return pedidoId;
-//    }
 
     public String getId() {
         return id;

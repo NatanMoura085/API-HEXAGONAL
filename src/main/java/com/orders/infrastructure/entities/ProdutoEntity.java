@@ -6,6 +6,7 @@ import com.orders.core.model.Pedido;
 import com.orders.core.model.ProdutoModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ public class ProdutoEntity {
     private Integer id;
     @NotNull
     private String nome ;
+    @PositiveOrZero
     private double preco;
     private int QTDe;
     @ManyToOne(cascade = CascadeType.PERSIST)

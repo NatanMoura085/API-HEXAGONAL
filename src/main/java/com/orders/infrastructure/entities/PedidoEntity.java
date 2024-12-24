@@ -28,8 +28,8 @@ public class PedidoEntity {
     private OffsetDateTime dateTime;
     @Enumerated(EnumType.STRING)
     private TypeProcess typeProcess;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     @JsonManagedReference
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProdutoEntity> produtoEntities = new ArrayList<>();
     private Double total;
 

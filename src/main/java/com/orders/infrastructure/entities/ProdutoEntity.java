@@ -57,6 +57,7 @@ public class ProdutoEntity {
         this.pedido = new PedidoEntity(pedido);
         for (ProdutoModel p : pedido.getProdutoList()) {
             ProdutoEntity produtoEntity = new ProdutoEntity();
+            produtoEntity.setId(Integer.parseInt(p.getId()));
             produtoEntity.setNome(p.getNome());
             produtoEntity.setPreco(p.getPreco());
             produtoEntity.setQTDe(p.getQTDe());

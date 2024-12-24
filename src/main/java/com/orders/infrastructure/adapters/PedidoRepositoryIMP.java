@@ -34,19 +34,9 @@ public class PedidoRepositoryIMP implements PedidoRepository {
         if (Objects.isNull(pedido)) {
             throw new IllegalArgumentException("Pedido não pode ser nulo.");
         }
-
-
         PedidoEntity pedidoEntity = new PedidoEntity(pedido);
+
         pedidoEntity = this.springPedidoRepository.save(pedidoEntity);
-
-
-        if (pedido.getProdutoList() != null) {
-            for (ProdutoModel produtoModel : pedido.getProdutoList()) {
-                ProdutoEntity produtoEntity = new ProdutoEntity(produtoModel);
-                produtoEntity.setPedido(pedidoEntity);
-                this.springRepository.save(produtoEntity);
-            }
-        }
 
     }
 
@@ -57,6 +47,7 @@ public class PedidoRepositoryIMP implements PedidoRepository {
 
         if (Objects.nonNull(pedido.getId())) {
             pedidoEntity = new PedidoEntity(pedido);
+            pedidoEntity.setTotal(pedido.getTotal());
             pedidoEntity.setId(Long.parseLong(pedido.getId()));
             pedidoEntity.setTypeProcess(pedido.getTypeProcess());
             pedidoEntity.setDateTime(pedido.getDateTime());

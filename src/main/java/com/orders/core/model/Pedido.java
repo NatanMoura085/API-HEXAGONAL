@@ -12,7 +12,7 @@ public class Pedido {
     private String id;
     private OffsetDateTime dateTime;
     private TypeProcess typeProcess;
-    private List<ProdutoModel> produtoModelList  =new ArrayList<>();;
+    private List<ProdutoModel> produtoModelList = new ArrayList<>();;
     private Double total;
 
 

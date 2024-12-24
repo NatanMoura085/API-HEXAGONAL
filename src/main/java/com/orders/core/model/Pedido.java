@@ -2,6 +2,7 @@ package com.orders.core.model;
 
 import com.orders.core.dtos.PedidoDTO;
 import com.orders.core.enums.TypeProcess;
+import com.orders.infrastructure.entities.PedidoEntity;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class Pedido {
         this.dateTime = pedidoDTO.getDateTime();
         this.typeProcess = pedidoDTO.getTypeProcess();
         this.produtoModelList = (pedidoDTO.getProdutoList() == null) ? new ArrayList<>() : pedidoDTO.getProdutoList();
-        this.total = somaTotal();
+        this.total = pedidoDTO.getTotal();
     }
 
     public Pedido(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoModel> produtoModelList) {
@@ -40,15 +41,25 @@ public class Pedido {
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
         this.produtoModelList =  produtoModelList;
-        this.total = somaTotal();
+        this.total = somaTotal((Pedido) produtoModelList);
     }
 
     public void adicionarProduto(String nome, int QTDe, double preco) {
         produtoModelList.add(new ProdutoModel(nome,QTDe, preco));
     }
 
-    public double somaTotal(){
-        return produtoModelList.stream().mapToDouble(produto-> produto.getPreco() * produto.getQTDe()).sum();
+    public double somaTotal(Object value) {
+         if (value ==null){
+             throw new NullPointerException("esta nulo");
+         }
+        if (value instanceof Pedido pedido) {
+            return pedido.getProdutoList().stream().mapToDouble(produto -> produto.getPreco() * produto.getQTDe()).sum();
+
+        } else if (value instanceof PedidoEntity pedidoEntity) {
+            return pedidoEntity.getProdutoEntities().stream().mapToDouble(produto -> produto.getPreco() * produto.getQTDe()).sum();
+        }
+        return 2.0;
+
     }
     public List<ProdutoModel> getProdutoList() {
         return produtoModelList == null ? new ArrayList<>() : produtoModelList;

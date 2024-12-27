@@ -60,7 +60,8 @@ public class Pedido {
             return pedidoEntity.getProdutoEntities().stream()
                     .mapToDouble(produto -> produto.getPreco() * produto.getQTDe()).sum();
         } else if (value instanceof List<?> lista) {
-            return produtoModelList.stream().mapToDouble(this::somaTotal).sum();
+            lista = (List<?>) new ProdutoModel();
+            return lista.stream().mapToDouble(this::somaTotal).sum();
         }
         throw new IllegalArgumentException("valor nao suportado");
 

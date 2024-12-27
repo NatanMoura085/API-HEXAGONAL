@@ -38,13 +38,13 @@ public class PedidoEntity {
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
         this.produtoEntities = produtoEntities;
-        this.total = toPedido().somaTotal(produtoEntities);
+        //this.total = toPedido().somaTotal(produtoEntities);
     }
 
     public PedidoEntity(Pedido pedido){
         this.dateTime = pedido.getDateTime();
         this.typeProcess = pedido.getTypeProcess();
-        this.total = pedido.somaTotal(pedido);
+        this.total = toPedido().somaTotal(pedido);
         this.produtoEntities = pedido.getProdutoList().stream().map(ProdutoEntity::new).toList();
     }
 

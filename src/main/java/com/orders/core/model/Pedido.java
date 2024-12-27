@@ -41,7 +41,7 @@ public class Pedido {
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
         this.produtoModelList =  produtoModelList;
-        this.total = somaTotal((Pedido) produtoModelList);
+        // this.total = somaTotal(produtoModelList);
     }
 
     public void adicionarProduto(String nome, int QTDe, double preco) {
@@ -49,16 +49,20 @@ public class Pedido {
     }
 
     public double somaTotal(Object value) {
-         if (value ==null){
-             throw new NullPointerException("esta nulo");
-         }
+        if (value == null) {
+            throw new NullPointerException("esta nulo ou nao tem valor");
+        }
         if (value instanceof Pedido pedido) {
-            return pedido.getProdutoList().stream().mapToDouble(produto -> produto.getPreco() * produto.getQTDe()).sum();
+            return pedido.getProdutoList().stream()
+                    .mapToDouble(produto -> produto.getPreco() * produto.getQTDe()).sum();
 
         } else if (value instanceof PedidoEntity pedidoEntity) {
-            return pedidoEntity.getProdutoEntities().stream().mapToDouble(produto -> produto.getPreco() * produto.getQTDe()).sum();
+            return pedidoEntity.getProdutoEntities().stream()
+                    .mapToDouble(produto -> produto.getPreco() * produto.getQTDe()).sum();
+        } else if (value instanceof List<?> lista) {
+            return produtoModelList.stream().mapToDouble(this::somaTotal).sum();
         }
-        return 2.0;
+        throw new IllegalArgumentException("valor nao suportado");
 
     }
     public List<ProdutoModel> getProdutoList() {

@@ -78,12 +78,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t myapp:latest .
+        run: docker build -t api-hexagonal .
 
       - name: Push Docker Image
         run: |
-          docker tag myapp:latest mydockerhubuser/myapp:latest
-          docker push mydockerhubuser/myapp:latest
+          docker tag api-hexagonal:latest natan085/api-hexagonal:latest
+          docker push natan085/api-hexagonal:latest
 
   deploy:
     needs: docker-build

@@ -35,5 +35,5 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: 'http://localhost:9000'
+          SONAR_HOST_URL: http://localhost:9000
         run: mvn -B verify -DskipTests org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=api-hexagonal -Dsonar.projectName='api-hexagonal'

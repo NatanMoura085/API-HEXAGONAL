@@ -5,7 +5,6 @@ on:
     branches:
       - main
 
-
 jobs:
   build:
     name: Build and analyze
@@ -20,6 +19,10 @@ jobs:
         with:
           java-version: 17
           distribution: 'zulu'
+      - name: Start SonarQube
+        run: |
+          docker run -d --name sonarqube -p 9000:9000 sonarqube:community
+          sleep 60 # Aguarda o SonarQube iniciar
       - name: Cache SonarQube packages
         uses: actions/cache@v4
         with:
@@ -35,5 +38,5 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: 'http://localhost:9000'
         run: mvn -B verify -DskipTests org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=api-hexagonal -Dsonar.projectName='api-hexagonal'

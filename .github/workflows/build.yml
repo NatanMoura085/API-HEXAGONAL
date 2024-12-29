@@ -23,7 +23,7 @@ jobs:
         run: |
           docker run -d --name sonarqube -p 9000:9000 sonarqube:community
           sleep 60 # Aguarda o SonarQube iniciar
-      - name: Cache SonarQube packages
+      - name: Cache SonarQube packagess
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache

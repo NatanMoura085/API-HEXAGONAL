@@ -36,7 +36,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -B verify -DskipTests org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-          -Dsonar.projectKey=natanmoura085 \
-          -Dsonar.organization=Natan Moura \
+          -Dsonar.projectKey=NatanMoura085_API-HEXAGONAL \
+          -Dsonar.organization=natanmoura085 \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.branch.name=main

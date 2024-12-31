@@ -10,4 +10,5 @@ public interface PedidoRepository {
     void salvar(Pedido pedido);
     void update(Pedido pedido);
     void delete(Integer id);
+    Double calculoTotal(Integer id);
 }

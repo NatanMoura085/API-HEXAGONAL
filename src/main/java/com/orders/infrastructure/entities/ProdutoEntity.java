@@ -26,7 +26,7 @@ public class ProdutoEntity {
     @PositiveOrZero
     private double preco;
     private int QTDe;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "pedido_id", referencedColumnName = "id")
     @JsonBackReference
     private PedidoEntity pedido;
@@ -47,25 +47,6 @@ public class ProdutoEntity {
         this.QTDe = produtoDTO.getQTDe();
     }
 
-    public ProdutoEntity(Pedido pedido) {
-       mapProdAdd(pedido);
-    }
-
-
-
-    public void mapProdAdd(Pedido pedido){
-        this.pedido = new PedidoEntity(pedido);
-        for (ProdutoModel p : pedido.getProdutoList()) {
-            ProdutoEntity produtoEntity = new ProdutoEntity();
-            produtoEntity.setId(Integer.parseInt(p.getId()));
-            produtoEntity.setNome(p.getNome());
-            produtoEntity.setPreco(p.getPreco());
-            produtoEntity.setQTDe(p.getQTDe());
-            produtoEntity.setPedido(this.pedido);
-            this.pedido.getProdutoEntities().add(produtoEntity);
-            logger.info("aqui>>>>>>>"+ produtoEntity.getNome());
-        }
-    }
     public ProdutoModel toProduto() {
         return new ProdutoModel(this.nome, this.QTDe, this.preco);
     }

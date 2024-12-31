@@ -1,10 +1,8 @@
 package com.orders.infrastructure.adapters;
 
 import com.orders.core.model.Pedido;
-import com.orders.core.model.ProdutoModel;
 import com.orders.core.ports.repositories.PedidoRepository;
 import com.orders.infrastructure.entities.PedidoEntity;
-import com.orders.infrastructure.entities.ProdutoEntity;
 import com.orders.infrastructure.repository.SpringPedidoRepository;
 import com.orders.infrastructure.repository.SpringRepository;
 import org.springframework.stereotype.Component;
@@ -17,11 +15,10 @@ public class PedidoRepositoryIMP implements PedidoRepository {
     private SpringPedidoRepository springPedidoRepository;
     private SpringRepository springRepository;
 
-
     public PedidoRepositoryIMP(SpringPedidoRepository springPedidoRepository,SpringRepository springRepository) {
-
         this.springPedidoRepository = springPedidoRepository;
         this.springRepository = springRepository;
+
     }
 
     @Override
@@ -35,6 +32,9 @@ public class PedidoRepositoryIMP implements PedidoRepository {
             throw new IllegalArgumentException("Pedido não pode ser nulo.");
         }
         PedidoEntity pedidoEntity = new PedidoEntity(pedido);
+        List<Double> precos = springRepository.buscarPrecosPorPedido(pedidoEntity.getId());
+         pedidoEntity.setTotal(precos.stream().mapToDouble(value ->value +value).sum());
+
 
         pedidoEntity = this.springPedidoRepository.save(pedidoEntity);
 
@@ -61,5 +61,15 @@ public class PedidoRepositoryIMP implements PedidoRepository {
     public void delete(Integer id) {
         PedidoEntity pedidoEntity = springPedidoRepository.findById(id).orElseThrow();
         this.springPedidoRepository.delete(pedidoEntity);
+    }
+
+    @Override
+    public Double calculoTotal(Integer id) {
+         if (!springPedidoRepository.existsById(id)){
+             throw new RuntimeException("pedido nao existe");
+         }
+       List<Double> valores=  springRepository.findBypreco();
+         var calcular = valores.stream().mapToDouble(value -> value * value).sum();
+        return calcular;
     }
 }

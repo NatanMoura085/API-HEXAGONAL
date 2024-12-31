@@ -28,7 +28,7 @@ public class PedidoEntity {
     private OffsetDateTime dateTime;
     @Enumerated(EnumType.STRING)
     private TypeProcess typeProcess;
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<ProdutoEntity> produtoEntities = new ArrayList<>();
     private Double total;
@@ -38,15 +38,35 @@ public class PedidoEntity {
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
         this.produtoEntities = produtoEntities;
-        //this.total = toPedido().somaTotal(produtoEntities);
+        this.total = somaTotalFromEntity(produtoEntities);
     }
 
     public PedidoEntity(Pedido pedido){
+        //problema esta por aqui
         this.dateTime = pedido.getDateTime();
         this.typeProcess = pedido.getTypeProcess();
-        this.total = toPedido().somaTotal(pedido);
+        this.total = somaTotal(pedido);
         this.produtoEntities = pedido.getProdutoList().stream().map(ProdutoEntity::new).toList();
     }
+
+    private double somaTotal(Pedido pedido) {
+        if (pedido == null || pedido.getProdutoList() == null) {
+            throw new NullPointerException("Pedido ou lista de produtos está nulo.");
+        }
+        return pedido.getProdutoList().stream()
+                .mapToDouble(produto -> produto.getPreco() * produto.getQTDe())
+                .sum();
+    }
+
+    private double somaTotalFromEntity(List<ProdutoEntity> produtos) {
+        if (produtos == null) {
+            throw new NullPointerException("A lista de produtos da entidade está nula.");
+        }
+        return produtos.stream()
+                .mapToDouble(produto -> produto.getPreco() * produto.getQTDe())
+                .sum();
+    }
+
 
     public Pedido toPedido() {
         return new Pedido(this.dateTime,this.typeProcess,this.produtoEntities.stream().map(ProdutoEntity::toProduto).toList());

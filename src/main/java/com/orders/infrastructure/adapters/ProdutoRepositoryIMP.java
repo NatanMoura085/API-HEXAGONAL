@@ -4,6 +4,8 @@ import com.orders.core.model.ProdutoModel;
 import com.orders.core.ports.repositories.ProdutoRepository;
 import com.orders.infrastructure.entities.ProdutoEntity;
 import com.orders.infrastructure.repository.SpringRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ProdutoRepositoryIMP implements ProdutoRepository {
+    private static final Logger logger = LoggerFactory.getLogger(ProdutoRepositoryIMP.class);
     private SpringRepository springRepository;
 
 
@@ -24,6 +27,7 @@ public class ProdutoRepositoryIMP implements ProdutoRepository {
         try {
             if (Objects.nonNull(produto)) {
                 ProdutoEntity produtoEntity = new ProdutoEntity(produto);
+                logger.info("aqui>>>>>>>>"+ String.valueOf(produtoEntity.getPreco()));
                 this.springRepository.save(produtoEntity);
             } else {
                 throw new IllegalArgumentException("Produto não pode ser nulo");

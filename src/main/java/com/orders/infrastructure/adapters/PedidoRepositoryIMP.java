@@ -3,6 +3,7 @@ package com.orders.infrastructure.adapters;
 import com.orders.core.model.Pedido;
 import com.orders.core.ports.repositories.PedidoRepository;
 import com.orders.infrastructure.entities.PedidoEntity;
+import com.orders.infrastructure.entities.ProdutoEntity;
 import com.orders.infrastructure.repository.SpringPedidoRepository;
 import com.orders.infrastructure.repository.SpringRepository;
 import org.springframework.stereotype.Component;
@@ -32,8 +33,7 @@ public class PedidoRepositoryIMP implements PedidoRepository {
             throw new IllegalArgumentException("Pedido não pode ser nulo.");
         }
         PedidoEntity pedidoEntity = new PedidoEntity(pedido);
-        List<Double> precos = springRepository.buscarPrecosPorPedido(pedidoEntity.getId());
-         pedidoEntity.setTotal(precos.stream().mapToDouble(value ->value +value).sum());
+        pedidoEntity.setTotal(calculoTotal(pedidoEntity.getProdutoEntities()));
 
 
         pedidoEntity = this.springPedidoRepository.save(pedidoEntity);
@@ -63,13 +63,9 @@ public class PedidoRepositoryIMP implements PedidoRepository {
         this.springPedidoRepository.delete(pedidoEntity);
     }
 
+
     @Override
-    public Double calculoTotal(Integer id) {
-         if (!springPedidoRepository.existsById(id)){
-             throw new RuntimeException("pedido nao existe");
-         }
-       List<Double> valores=  springRepository.findBypreco();
-         var calcular = valores.stream().mapToDouble(value -> value * value).sum();
-        return calcular;
+    public Double calculoTotal(List<ProdutoEntity> produtoEntityList) {
+        return produtoEntityList.stream().mapToDouble(value -> value.getPreco()).sum();
     }
 }

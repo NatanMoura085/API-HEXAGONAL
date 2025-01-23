@@ -18,7 +18,7 @@ public class Pedido {
 
 
     public Pedido() {
-
+        this.id = UUID.randomUUID().toString();
     }
 
     public Pedido(TypeProcess typeProcess) {
@@ -26,7 +26,7 @@ public class Pedido {
         this.dateTime = OffsetDateTime.now();
         this.typeProcess = typeProcess;
         produtoModelList = new ArrayList<>();
-        this.total = 0.0;
+        this.total =0.0;
     }
 
     public Pedido(PedidoDTO pedidoDTO) {
@@ -37,12 +37,12 @@ public class Pedido {
         this.total = pedidoDTO.getTotal();
     }
 
-    public Pedido(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoModel> produtoModelList) {
+    public Pedido(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoModel> produtoModelList, Double total) {
         this.id = UUID.randomUUID().toString();
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
         this.produtoModelList = produtoModelList;
-        this.total = produtoModelList.stream().mapToDouble(preco -> preco.getPreco()).sum();
+        this.total = total;
     }
 
     public void adicionarProduto(String nome, int QTDe, double preco) {

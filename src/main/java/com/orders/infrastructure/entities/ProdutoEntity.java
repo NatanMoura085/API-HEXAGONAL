@@ -2,7 +2,6 @@ package com.orders.infrastructure.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.orders.core.dtos.ProdutoDTO;
-import com.orders.core.model.Pedido;
 import com.orders.core.model.ProdutoModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +22,7 @@ public class ProdutoEntity {
     private Integer id;
     @NotNull
     private String nome ;
-    @PositiveOrZero
+    @PositiveOrZero(message = "o valor deve ser maior que zero")
     private double preco;
     private int QTDe;
     @ManyToOne

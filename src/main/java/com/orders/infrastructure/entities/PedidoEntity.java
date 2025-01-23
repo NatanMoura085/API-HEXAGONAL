@@ -34,28 +34,19 @@ public class PedidoEntity {
     private Double total;
 
 
-    public PedidoEntity(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoEntity> produtoEntities) {
+    public PedidoEntity(OffsetDateTime dateTime, TypeProcess typeProcess, List<ProdutoEntity> produtoEntities,Double total) {
         this.dateTime = dateTime;
         this.typeProcess = typeProcess;
         this.produtoEntities = produtoEntities;
-        this.total = somaTotalFromEntity(produtoEntities);
+        this.total = total;
     }
 
     public PedidoEntity(Pedido pedido){
         //problema esta por aqui
         this.dateTime = pedido.getDateTime();
         this.typeProcess = pedido.getTypeProcess();
-        this.total = somaTotal(pedido);
+        this.total = pedido.getTotal();
         this.produtoEntities = pedido.getProdutoList().stream().map(ProdutoEntity::new).toList();
-    }
-
-    private double somaTotal(Pedido pedido) {
-        if (pedido == null || pedido.getProdutoList() == null) {
-            throw new NullPointerException("Pedido ou lista de produtos está nulo.");
-        }
-        return pedido.getProdutoList().stream()
-                .mapToDouble(produto -> produto.getPreco() * produto.getQTDe())
-                .sum();
     }
 
     private double somaTotalFromEntity(List<ProdutoEntity> produtos) {
@@ -69,7 +60,7 @@ public class PedidoEntity {
 
 
     public Pedido toPedido() {
-        return new Pedido(this.dateTime,this.typeProcess,this.produtoEntities.stream().map(ProdutoEntity::toProduto).toList());
+        return new Pedido(this.dateTime,this.typeProcess,this.produtoEntities.stream().map(ProdutoEntity::toProduto).toList(),this.total);
     }
 
 

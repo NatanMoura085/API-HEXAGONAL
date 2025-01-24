@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: app-container
     ports:
-      - "8080:8080"
+      - "8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/kafka
       SPRING_DATASOURCE_USERNAME: postgres
@@ -38,10 +38,12 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_BROKER_ID: ${KAFKA_BROKER_ID}
+      KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: ${KAFKA_ADVERTISED_LISTENERS}
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+    volumes:
+      - kafka-data:/bitnami/kafka
     depends_on:
       - zookeeper
     networks:
@@ -52,6 +54,10 @@ services:
     container_name: zookeeper-container
     ports:
       - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    volumes:
+      - zookeeper-data:/bitnami/zookeeper
     networks:
       - app_network
 
@@ -61,3 +67,5 @@ networks:
 
 volumes:
   postgres-data:
+  kafka-data:
+  zookeeper-data:

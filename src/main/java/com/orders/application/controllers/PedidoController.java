@@ -30,6 +30,6 @@ public class PedidoController {
     @PostMapping("/order")
     public void criarPedido(@RequestBody Pedido pedido) {
          pedidoServicePort.fazerPedido(pedido);
-        //this.pedidoPublish.enviarPedido(pedido);
+        this.pedidoPublish.enviarPedido(pedido);
     }
 }

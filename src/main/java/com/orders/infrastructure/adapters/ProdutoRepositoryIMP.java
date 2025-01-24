@@ -27,7 +27,6 @@ public class ProdutoRepositoryIMP implements ProdutoRepository {
         try {
             if (Objects.nonNull(produto)) {
                 ProdutoEntity produtoEntity = new ProdutoEntity(produto);
-                logger.info("aqui>>>>>>>>"+ String.valueOf(produtoEntity.getPreco()));
                 this.springRepository.save(produtoEntity);
             } else {
                 throw new IllegalArgumentException("Produto não pode ser nulo");

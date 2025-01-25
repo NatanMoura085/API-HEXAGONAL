@@ -5,6 +5,7 @@ import com.orders.core.ports.interfaces.PedidoPublish;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Component
@@ -17,8 +18,8 @@ public class KafkaPublishIMP implements PedidoPublish {
 
     @Override
     public void enviarPedido(Pedido pedido) {
-        Set<String> key = null;
-        var lista = pedido.getProdutoList().stream().filter(produt -> key.add(produt.getId()));
+        Set<String> key = new HashSet<>();
+        pedido.getProdutoList().forEach(produt -> key.add(produt.getNome()));
         kafkaTemplate.send("pedidos", key);
     }
 }

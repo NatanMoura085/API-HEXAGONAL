@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  DB_USERNAME: postgres
+  DB_PASSWORD: root
+  DB_NAME: kafka
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: default

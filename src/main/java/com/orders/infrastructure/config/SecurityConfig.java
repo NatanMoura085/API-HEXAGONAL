@@ -27,7 +27,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/v1/orders/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/api/v1/orders/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/api/v1/order/**").permitAll()
-                        .anyRequest().authenticated())
+                                .requestMatchers( HttpMethod.GET,"/actuator/health").permitAll()
+                                .anyRequest().authenticated())
                 .build();
     }
 

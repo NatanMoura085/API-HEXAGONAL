@@ -4,17 +4,29 @@ metadata:
   name: app-ingress
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+ #   nginx.ingress.kubernetes.io/rewrite-target: /$1
+ #   nginx.ingress.kubernetes.io/use-regex: "true"
+ #   nginx.ingress.kubernetes.io/ssl-redirect: "true"
+ #   nginx.ingress.kubernetes.io/enable-cors: "true"
+  #  nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+   # nginx.ingress.kubernetes.io/enable-websocket: "true"
+    #nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    # cert-manager.io/cluster-issuer: letsencrypt  # Solicita o certificado automaticamente
+     cert-manager.io/issuer: "selfsigned-issuer"
 spec:
   ingressClassName: nginx
   rules:
-    - host: localhost
+    - host: example.com                             #"app.172.18.0.100.nip.io"  # Aqui precisa de um valor explícito
       http:
         paths:
-          - path: /api/v1/orders
+          - path: /v1/api/orders
             pathType: Prefix
             backend:
               service:
                 name: app
                 port:
                   number: 8081
+  tls:
+    - hosts:
+        - example.com
+      secretName: localhost-tls   # Certificado TLS gerado pelo cert-manager

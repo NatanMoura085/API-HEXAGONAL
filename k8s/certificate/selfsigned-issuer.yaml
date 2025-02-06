@@ -1,14 +1,7 @@
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
-  name: letsencrypt
+  name: selfsigned-issuer
+  namespace: default
 spec:
-  acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
-    email: mouranatan933@gmail.com # Substitua pelo seu email
-    privateKeySecretRef:
-      name: letsencrypt-account-key
-    solvers:
-      - http01:
-          ingress:
-            class: nginx
+  selfSigned: {}

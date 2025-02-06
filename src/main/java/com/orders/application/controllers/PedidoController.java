@@ -15,9 +15,9 @@ public class PedidoController {
     private PedidoServicePort pedidoServicePort;
     private PedidoPublish pedidoPublish;
 
-    public PedidoController(PedidoServicePort pedidoServicePort, PedidoPublish pedidoPublish) {
+    public PedidoController(PedidoServicePort pedidoServicePort,PedidoPublish pedidoPublish) {
         this.pedidoServicePort = pedidoServicePort;
-        this.pedidoPublish = pedidoPublish;
+       this.pedidoPublish = pedidoPublish;
 
     }
 

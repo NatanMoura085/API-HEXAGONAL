@@ -5,8 +5,9 @@ import com.orders.core.model.Pedido;
 import com.orders.core.model.ProdutoModel;
 import com.orders.core.ports.interfaces.PedidoPublish;
 import com.orders.core.ports.interfaces.PedidoServicePort;
-import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.MockProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,8 +23,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class PedidoControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -44,15 +47,17 @@ class PedidoControllerTest {
 
     @InjectMocks
     private PedidoController pedidoController;
-    @Mock
-    private KafkaProducer<String, String> kafkaProducer;
+
+    private MockProducer<String, String> mockProducer;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        when(pedidoServicePort.listaDePedidos()).thenReturn(Arrays.asList()); // Garante que não chame o BD
-    }
 
+        mockProducer = new MockProducer<>(true, new StringSerializer(), new StringSerializer());
+
+        when(pedidoServicePort.listaDePedidos()).thenReturn(Arrays.asList());
+    }
 
     @Test
     void getAll() throws Exception {
@@ -70,29 +75,28 @@ class PedidoControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(0));
-
-        // verify(pedidoServicePort, times(1)).listaDePedidos();
     }
 
     @Test
-    void criarPedido() {
-        // Configura o pedido
+    void criarPedido_DeveEnviarMensagemParaKafka() {
+        String topic = "pedido-topic";
+        String message = "Pedido enviado";
         ProdutoModel produto1 = new ProdutoModel("Notebook", 4, 10000);
         ProdutoModel produto2 = new ProdutoModel("Celular", 4, 900);
         List<ProdutoModel> produtoList = Arrays.asList(produto1, produto2);
         Pedido pedido1 = new Pedido(OffsetDateTime.now(), TypeProcess.SUCCESS, produtoList, 100.00);
+        when(pedidoServicePort.fazerPedido(any(Pedido.class))).thenReturn(pedido1);
 
-        // Configura o mock do KafkaProducer
-        String topic = "pedido-topic";
-        String message = "Pedido enviado";
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, message);
+        mockProducer.send(new ProducerRecord<>(topic, message));
 
-        when(kafkaProducer.send(record)).thenReturn(null); // Mock do envio
-
-        // Chama o método no controlador
         pedidoController.criarPedido(pedido1);
 
-        // Verifica se o método send foi chamado uma vez
-       // verify(kafkaProducer, times(1)).send(any(ProducerRecord.class));  // Modificado para garantir qualquer ProducerRecord
+        assertFalse(mockProducer.history().isEmpty(), "Nenhuma mensagem foi enviada para o Kafka!");
+
+        ProducerRecord<String, String> recordEnviado = mockProducer.history().get(0);
+        assertEquals(topic, recordEnviado.topic());
+        assertEquals(message, recordEnviado.value());
+
+        verify(pedidoPublish, times(1)).enviarPedido(any(Pedido.class));
     }
 }

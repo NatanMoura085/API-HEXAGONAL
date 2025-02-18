@@ -3,12 +3,14 @@ package com.orders.application.controllers;
 import com.orders.core.model.Pedido;
 import com.orders.core.ports.interfaces.PedidoPublish;
 import com.orders.core.ports.interfaces.PedidoServicePort;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "listaDePedidos", description = "API de gerenciamento de pedidos")
 @RestController
 @RequestMapping("/api/v1")
 public class PedidoController {
@@ -26,6 +28,7 @@ public class PedidoController {
         return pedidoServicePort.listaDePedidos();
     }
 
+    @Operation(summary = "Lista todos pedidos", description = "Retorna uma lista de pedidos")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/order")
     public void criarPedido(@RequestBody Pedido pedido) {

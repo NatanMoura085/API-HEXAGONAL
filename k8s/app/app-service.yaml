@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: app
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 8081
       targetPort: 8081
-      nodePort: 30000  # Porta exposta no nó
   selector:
     app: app
